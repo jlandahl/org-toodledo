@@ -2025,10 +2025,13 @@ and from the local org file on the next sync"
           (while (re-search-forward "XXXX " nil t)
             (replace-match ""))
 
-          ;; org-export-remove-or-extract-drawers removed an argument sometime around version 7
-          (if (>= (string-to-number (if (boundp 'org-version) org-version (org-version))) 7)
-              (org-export-remove-or-extract-drawers org-drawers nil)
-            (org-export-remove-or-extract-drawers org-drawers nil nil))
+          ;; need to compute (local) org-version to account for a missing global in some releases of
+          ;; org-mode
+          (let ((org-version (string-to-number (if (boundp 'org-version) org-version (org-version)))))
+            ;; org-export-remove-or-extract-drawers removed an argument sometime around version 7
+            (if (>= org-version 7)
+                (org-export-remove-or-extract-drawers org-drawers nil)
+              (org-export-remove-or-extract-drawers org-drawers nil nil)))
 
           ;; Trim leading/trailing empty lines, but preserve whitepace at the beginning of the line
           (goto-char (point-min))
