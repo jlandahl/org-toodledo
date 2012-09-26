@@ -2026,7 +2026,7 @@ and from the local org file on the next sync"
             (replace-match ""))
 
           ;; org-export-remove-or-extract-drawers removed an argument sometime around version 7
-          (if (>= (string-to-number (if (boundp 'org-version) org-version (org-version)) 7)
+          (if (>= (string-to-number (if (boundp 'org-version) org-version (org-version))) 7)
               (org-export-remove-or-extract-drawers org-drawers nil)
             (org-export-remove-or-extract-drawers org-drawers nil nil))
 
